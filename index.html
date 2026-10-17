@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Budgetly | Expense Analyzer</title>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="./style.css">
+
+    <!-- PyScript -->
+    <link
+        rel="stylesheet"
+        href="https://pyscript.net/releases/2026.7.3/core.css"
+    >
+    <script
+        type="module"
+        src="https://pyscript.net/releases/2026.7.3/core.js"
+    ></script>
+</head>
+
+<body>
+    <div class="app-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">₱</div>
+                <span>Budget tracker</span>
+            </div>
+
+            <p class="nav-heading">MENU</p>
+
+            <a href="#dashboard" class="nav-link active">
+                <span>▦</span> Dashboard
+            </a>
+
+            <a href="#allowance-section" class="nav-link">
+                <span>₱</span> My Allowance
+            </a>
+
+            <a href="#add-expense" class="nav-link">
+                <span>＋</span> Add Expense
+            </a>
+
+            <a href="#transactions" class="nav-link">
+                <span>☷</span> Transactions
+            </a>
+
+            <div class="sidebar-note">
+                <p>💡 Smart spending starts here.</p>
+                <small>Ayaw na sig gasto lage!</small>
+            </div>
+        </aside>
+
+        <!-- Main content -->
+        <main class="main-content" id="dashboard">
+
+            <!-- Header -->
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">PERSONAL FINANCE</p>
+                    <h1>Expense Dashboard</h1>
+                    <p class="subtitle">
+                        Ayaw na sig gasto lage!
+                    </p>
+                </div>
+
+                <div class="profile">
+                    <div class="avatar">U</div>
+                    <span>My Account</span>
+                </div>
+            </header>
+
+            <!-- Summary cards -->
+            <section class="summary-grid">
+
+                <article class="summary-card">
+                    <div class="card-top">
+                        <span class="card-label">Total Spending</span>
+                        <span class="card-icon purple">₱</span>
+                    </div>
+                    <h2 id="total">₱0.00</h2>
+                    <p class="card-foot">All recorded expenses</p>
+                </article>
+
+                <article class="summary-card">
+                    <div class="card-top">
+                        <span class="card-label">Transactions</span>
+                        <span class="card-icon blue">☷</span>
+                    </div>
+                    <h2 id="count">0</h2>
+                    <p class="card-foot">Expenses recorded</p>
+                </article>
+
+                <article class="summary-card">
+                    <div class="card-top">
+                        <span class="card-label">Average Expense</span>
+                        <span class="card-icon green">↗</span>
+                    </div>
+                    <h2 id="average">₱0.00</h2>
+                    <p class="card-foot">Per transaction</p>
+                </article>
+
+            </section>
+
+            <!-- Allowance section -->
+            <section class="panel" id="allowance-section">
+                <div class="section-heading">
+                    <div>
+                        <h2>My Allowance</h2>
+                        <p>ur rich allowance</p>
+                    </div>
+                    <span class="section-symbol">₱</span>
+                </div>
+
+                <form id="allowance-form">
+                    <div class="form-group">
+                        <label for="allowance-input">
+                            Allowance Amount (₱)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="allowance-input"
+                            min="0.01"
+                            step="0.01"
+                            placeholder="e.g. 5000"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="button primary">
+                            Set Allowance
+                        </button>
+                    </div>
+                </form>
+
+                <div class="allowance-summary">
+                    <p>
+                        Total Allowance:
+                        <strong id="allowance-total">₱0.00</strong>
+                    </p>
+
+                    <p>
+                        Remaining Balance:
+                        <strong id="balance">₱0.00</strong>
+                    </p>
+                </div>
+            </section>
+
+            <!-- Add expense form -->
+            <section class="panel" id="add-expense">
+                <div class="section-heading">
+                    <div>
+                        <h2>Add an Expense</h2>
+                        <p>Enter the details of your purchase.</p>
+                    </div>
+                    <span class="section-symbol">＋</span>
+                </div>
+
+                <form id="expense-form">
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            <label for="amount">Amount (₱)</label>
+                            <input
+                                type="number"
+                                id="amount"
+                                min="0.01"
+                                step="0.01"
+                                placeholder="e.g. 150.00"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category" required>
+                                <option value="">Select a category</option>
+                                <option value="Food">Food</option>
+                                <option value="Transportation">
+                                    Transportation
+                                </option>
+                                <option value="Education">Education</option>
+                                <option value="Bills">Bills</option>
+                                <option value="Shopping">Shopping</option>
+                                <option value="Entertainment">
+                                    Entertainment
+                                </option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="description">Description</label>
+                            <input
+                                type="text"
+                                id="description"
+                                placeholder="e.g. Lunch at school"
+                                maxlength="100"
+                                required
+                            >
+                        </div>
+
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="reset" class="button secondary">
+                            Clear
+                        </button>
+
+                        <button type="submit" class="button primary">
+                            + Add Expense
+                        </button>
+                    </div>
+                </form>
+
+                <p
+                    id="message"
+                    class="message"
+                    role="status"
+                    aria-live="polite"
+                >
+                    Ready to track your expenses.
+                </p>
+            </section>
+
+            <!-- Transactions table -->
+            <section class="panel" id="transactions">
+                <div class="section-heading">
+                    <div>
+                        <h2>Recent Transactions</h2>
+                        <p>Your recorded expenses appear here.</p>
+                    </div>
+
+                    <span class="transaction-count" id="record-label">
+                        0 records
+                    </span>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>DESCRIPTION</th>
+                                <th>CATEGORY</th>
+                                <th>AMOUNT</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="expense-list">
+                            <tr>
+                                <td colspan="3" class="empty-state">
+                                    No expenses recorded yet.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                trial for python x html
+            </footer>
+
+        </main>
+    </div>
+
+    <!-- Load external Python file -->
+    <script type="py" src="./p1.py"></script>
+</body>
+</html>
