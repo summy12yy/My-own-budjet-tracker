@@ -102,7 +102,6 @@ def add_expense(event):
 
     # Clear the form
     document.querySelector("#expense-form").reset()
-
     # Display a message
     total = sum(item["amount"] for item in expenses)
 
@@ -248,6 +247,17 @@ def update_dashboard():
 
         # Add the row to the table
         expense_list.appendChild(row)
+    
+@when ("click", "#resets")
+def refresh_transaction(event):
+    global expenses
+
+    expenses = []
+
+    save_data()
+    update_dashboard()
+    
+    show_message("It is refreshed")
 
 
 # Load saved data before displaying the dashboard
